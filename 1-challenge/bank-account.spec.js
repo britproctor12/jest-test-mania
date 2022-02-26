@@ -7,14 +7,14 @@ describe('Bank Account', () => {
     expect(account.balance).toEqual(0);
   });
 
-  xtest('can deposit money', () => {
+  test('can deposit money', () => {
     const account = new BankAccount();
     account.open();
     account.deposit(100);
     expect(account.balance).toEqual(100);
   });
 
-  xtest('can deposit money sequentially', () => {
+  test('can deposit money sequentially', () => {
     const account = new BankAccount();
     account.open();
     account.deposit(100);
@@ -22,7 +22,7 @@ describe('Bank Account', () => {
     expect(account.balance).toEqual(150);
   });
 
-  xtest('can withdraw money', () => {
+  test('can withdraw money', () => {
     const account = new BankAccount();
     account.open();
     account.deposit(100);
@@ -30,7 +30,7 @@ describe('Bank Account', () => {
     expect(account.balance).toEqual(50);
   });
 
-  xtest('can withdraw money sequentially', () => {
+  test('can withdraw money sequentially', () => {
     const account = new BankAccount();
     account.open();
     account.deposit(100);
@@ -39,14 +39,14 @@ describe('Bank Account', () => {
     expect(account.balance).toEqual(0);
   });
 
-  xtest('checking balance of closed account throws error', () => {
+  test('checking balance of closed account throws error', () => {
     const account = new BankAccount();
     account.open();
     account.close();
-    expect(() => account.balance).toThrow(ValueError);
+    expect(() => account.getBalance()).toThrow(ValueError);
   });
 
-  xtest('deposit into closed account throws error', () => {
+  test('deposit into closed account throws error', () => {
     const account = new BankAccount();
     account.open();
     account.close();
@@ -55,7 +55,7 @@ describe('Bank Account', () => {
     }).toThrow(ValueError);
   });
 
-  xtest('withdraw from closed account throws error', () => {
+  test('withdraw from closed account throws error', () => {
     const account = new BankAccount();
     account.open();
     account.close();
@@ -64,16 +64,19 @@ describe('Bank Account', () => {
     }).toThrow(ValueError);
   });
 
-  xtest('close already closed account throws error', () => {
-    const account = new BankAccount();
-    expect(() => {
-      account.close();
-    }).toThrow(ValueError);
-  });
-
-  xtest('open already opened account throws error', () => {
+  test('close already closed account throws error', () => {
     const account = new BankAccount();
     account.open();
+    account.close();
+    expect(() =>
+      account.close()
+    ).toThrow(ValueError);
+  });
+
+  test('open already opened account throws error', () => {
+    const account = new BankAccount();
+    account.open();
+    account.deposit(20)
     expect(() => {
       account.open();
     }).toThrow(ValueError);
